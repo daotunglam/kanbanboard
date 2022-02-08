@@ -1,0 +1,444 @@
+:root {
+    --main-color : rgb(30, 49, 144);
+    --margin-dirX: 20px;
+    --margin-dirY: 2.5vh;
+}
+
+/* == GENERAL ==================================(start) */
+
+body {
+    margin       : 0;
+    position     : relative;
+    font-family  : 'PT Sans', sans-serif !important;
+    word-wrap    : break-word;
+    overflow-wrap: break-word;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+main {
+    position    : absolute;
+    height      : 95vh;
+    margin-left : calc(var(--header-width) + 20px);
+    margin-right: 5px;
+    margin-top  : 2vh;
+}
+
+/* == GENERAL ==================================(end) */
+
+
+
+
+
+/* == PRIVACY-POLICY ==================================(start) */
+
+#privacyPolicy .longWord {
+    word-break: break-all;
+}
+
+@media(max-width:500px) {
+    #privacyPolicy h1 {
+        font-size: 20px;
+    }
+
+    #privacyPolicy h2 {
+        font-size: 16px;
+    }
+
+    #privacyPolicy h3 {
+        font-size: 14px;
+    }
+}
+
+/* == PRIVACY-POLICY ==================================(end) */
+
+
+
+
+
+/* == BOARD ==================================(start) */
+
+#board {
+    display       : flex;
+    flex-direction: row;
+}
+
+.column-container {
+    width       : 300px;
+    margin-right: var(--margin-dirX);
+}
+
+.column-container>.card {
+    height            : 88vh;
+    background-color  : rgba(30, 49, 144, 0.1);
+    display           : flex;
+    flex-direction    : column;
+    align-items       : center;
+    overflow-y        : scroll;
+    -ms-overflow-style: none;
+    scrollbar-width   : none;
+}
+
+.column-container>.card::-webkit-scrollbar {
+    display: none;
+}
+
+.column-container .task {
+    position: relative;
+}
+
+.column-container .task .card-header,
+.column-container .task .card-footer {
+    display        : none;
+    justify-content: space-between;
+    align-items    : center;
+    animation      : openTaskHearderFooter 0.1s;
+}
+
+@keyframes openTaskHearderFooter {
+    from {
+        height: 0;
+    }
+
+    to {
+        height: 100%;
+    }
+}
+
+#board .task select,
+#board .task input,
+#board .task textarea {
+    width     : 95%;
+    margin    : auto;
+    border    : none;
+    resize    : none;
+    margin-top: 4px;
+    max-height: 5rem;
+}
+
+/* == BOARD ==================================(end) */
+
+
+
+
+
+/* == FOOTER ==================================(start) */
+footer {
+    position: fixed;
+    top     : 2.5vh;
+    right   : 1rem;
+    display : flex;
+}
+
+footer #links {
+    display         : none;
+    background-color: black;
+    animation       : openToLeft 0.2s ease-in-out 1 backwards;
+}
+
+@keyframes openToLeft {
+    0% {
+        margin-right: -100px;
+    }
+
+    100% {
+        margin-right: 0
+    }
+}
+
+footer a {
+    text-decoration: none;
+    color          : white;
+    padding        : 1rem;
+}
+
+footer a:hover {
+    color          : white;
+    text-decoration: underline;
+}
+
+footer>i {
+    font-size: 1.5rem;
+}
+
+/* == FOOTER ==================================(end) */
+
+
+/* == Add to Task (start) */
+
+.main {
+    display        : flex;
+    justify-content: center;
+    flex-direction : column;
+    align-items    : center;
+    position       : absolute;
+    margin         : 2.5vh 0 2.5vh calc(var(--header-width) + 20px);
+}
+
+.main .card {
+    background-color: #E0E0E0;
+    justify-content : center;
+    border-radius   : 5px;
+    flex-direction  : row;
+}
+
+.taskBoxContent {
+    display       : flex;
+    flex-direction: column;
+    margin        : 20px;
+}
+
+.inputField {
+    display       : flex;
+    flex-direction: column;
+    margin        : 20px;
+}
+
+.dropdown-toggle {
+    justify-content: center;
+    display        : flex;
+    align-items    : center;
+    width          : 100%;
+}
+
+.form-control {
+    width: 30vw;
+}
+
+.description {
+    height: 20vh !important;
+}
+
+.form-label {
+    color: blue;
+}
+
+.responsibility {
+    display        : flex;
+    justify-content: space-between;
+}
+
+#assignedTo>img {
+    width        : 40px;
+    height       : 40px;
+    border-radius: 100%;
+    border       : 1px solid white;
+    padding      : 1px;
+    object-fit   : cover;
+}
+
+.task-buttons {
+    display        : flex;
+    justify-content: space-around;
+    margin-top     : 45px;
+}
+
+@media(max-width: 977px) {
+    .main {
+        margin-left : 2vw;
+        margin-right: 2vw;
+        
+    }
+
+    .card {
+        display       : flex;
+        flex-direction: column !important;
+    }
+
+    .form-control {
+        width: 100%;
+    }
+
+    .form-label {
+        text-align: center;
+    }
+
+    .task-site {
+        display        : flex;
+        justify-content: center;
+    }
+
+    .task-buttons {
+        flex-direction: column-reverse;
+    }
+
+    .btn2 {
+        margin-top: 20px;
+    }
+
+}
+
+/* == Add to Task (End) */
+
+
+
+
+
+/* == backlog Start*/
+
+.backlog-element {
+    background-color: #f1f1f1;
+    display         : flex;
+    justify-content : flex-start;
+    align-items     : center !important;
+    margin-bottom   : 20px;
+    border-radius   : 5px;
+    cursor          : pointer;
+    width           : 80vw !important;
+}
+
+.backlog-element:hover {
+    background-color: #f9f9f9;
+}
+
+.backlog-element-info {
+    width: 79vw;
+
+    display        : flex;
+    justify-content: flex-start;
+    align-items    : center !important;
+
+    border-radius: 5px;
+
+}
+
+.backlog-author {
+    display        : flex;
+    flex-direction : column;
+    justify-content: center;
+
+}
+
+.color-marking {
+    height                   : 100px;
+    width                    : .5vw;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius   : 5px;
+
+}
+
+.task-content {
+    width          : 40vw;
+    display        : flex;
+    justify-content: flex-start;
+    align-items    : center;
+
+
+}
+
+.erstelltVonClass {
+    display: flex;
+    width  : 25vw !important;
+
+}
+
+.headline {
+    display        : flex;
+    justify-content: flex-start;
+    color          : rgb(17, 89, 172);
+    width          : 80vw;
+
+}
+
+.category {
+    width: 10vw;
+}
+
+.erstelltVon-headline {
+
+    width: 25vw;
+
+}
+
+.category-headline {
+
+    width: 10vw;
+}
+
+.details-headline {
+
+    width     : 45vw;
+    text-align: left;
+
+}
+
+.task-content-title {
+    margin-right: 20px;
+    width       : 10vw;
+}
+
+.task-content-description {
+    margin-left: 20px;
+    width      : 30vw;
+
+}
+
+
+.d-none-button{
+    display: none;
+}
+
+.color-Einkauf {
+    background-color: rgb(129, 15, 40);
+}
+
+.color-Vertrieb {
+    background-color: rgb(14, 177, 76);
+}
+
+.color-IT {
+    background-color: rgb(177, 153, 14);
+}
+
+.color-Management {
+    background-color: rgb(164, 154, 255);
+}
+
+
+@media(max-width:977px) {
+    .hide-mobile {
+        display: none;
+
+    }
+
+    .task-content {
+        width          : 40vw;
+        display        : flex;
+        flex-direction : column;
+        justify-content: center;
+        align-items    : flex-start;
+    }
+
+    .task-content-title {
+        margin-left : 10px;
+        margin-right: 20px;
+        width       : 80vw;
+    }
+
+    .task-content-description {
+        margin-left : 10px;
+        margin-right: 20px;
+        width       : 80vw;
+
+    }
+
+    .backlog-element {
+        width: 89vw !important;
+    }
+
+    .d-none-button{
+        display: flex;
+        justify-content: center;
+        
+    }
+
+    .show-mobile{
+        display: flex;
+        flex-direction: column;
+    }
+
+}
+
+/* Backlog-Ende */

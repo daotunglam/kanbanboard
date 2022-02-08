@@ -1,0 +1,41 @@
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+.h-custom {
+  height: calc(100% - 73px);
+}
+
+.footer{
+    display: flex;
+}
+
+.img-fluid {
+    height: 500px;
+}
+
+.display-none-desktop{
+    display: none;
+}
+
+@media (max-width: 450px) {
+
+  .img-fluid {
+    height: unset;
+}
+  .display-none-desktop{
+    display: flex;
+    justify-content: center;
+}
+  .display-none {
+      display: none;
+  }
+
+  .h-100{
+      height: unset;
+  }
+
+}

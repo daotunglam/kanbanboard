@@ -1,0 +1,101 @@
+:root{
+    --header-width: 160px;
+}
+
+header{
+    background-color: var(--main-color);
+    color: white;
+    font-size: 24px;
+    width: var(--header-width);
+    height: 95vh;
+    border-radius: 0 4px 4px 0;
+    padding: 20px;
+    margin-top: 2vh;
+    position: fixed;
+    z-index: 1;
+}
+
+header .logo{
+    display: flex;
+    justify-content: center;
+    padding: 16px;
+}
+
+header nav{
+    margin: 20px auto;
+}
+
+header nav a{
+    text-decoration: none;
+    color: white;
+    display: block;
+    padding: 8px;
+}
+
+header nav > a:hover{
+    background-color: rgba(175, 175, 175, 0.5);
+    cursor: pointer;
+    color: white;
+}
+
+header #signin{
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    right: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header #profileLinks i{
+    font-size: 4rem;
+}
+
+header #signinBtn{
+    display: none;
+    text-decoration: none;
+    white-space: nowrap; 
+    position: absolute;
+    margin-bottom: -6rem;
+}
+
+header .active{
+    border-left: 2px solid white;
+    background-color: rgba(175, 175, 175, 0.2);
+}
+
+#toggleHeaderBtn{
+    position:absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 20px;
+    border-radius: 0 4px 4px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: transparent;
+}
+#toggleHeaderBtn:hover{
+    background-color: rgba(245, 245, 245, 0.2);
+    color: white;
+}
+
+@media (max-width:1024px){
+    header {
+        left: calc(10px - var(--header-width));
+    }
+    main{
+        margin-left: 20px;
+    }
+}
+
+@media (max-width:500px){
+    body{
+        font-size: 13px;
+    }
+    header {
+        left: calc(10px - var(--header-width));
+    }
+}

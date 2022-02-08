@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/header.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- flatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- fontawesome icons -->
+    <script src="https://kit.fontawesome.com/792b9e6aab.js" crossorigin="anonymous"></script>
+
+    <script src="js/mini_backend.js"></script>
+    <script src="js/task.js"></script>
+    <script src="js/script.js"></script>
+    
+
+
+
+    <title>Add your Task</title>
+
+</head>
+
+<body onload="initTask()">
+
+    <div class="task-site">
+        <!-- HEADER -->
+        <div class="mobile-header" w3-include-html="templates/header.html"></div>
+
+        <!-- MAIN -->
+        <div class="main">
+
+            <h1>Aufgabe hinzufügen</h1>
+            <p>Learning Management System Project</p>
+
+
+            <form class="card">
+                <div class="taskBoxContent">
+
+                    <div class="inputField">
+                        <label class="form-label">Title</label>
+                        <input id="title" class="form-control" aria-describedby="passwordHelpBlock" required>
+                    </div>
+
+                    <div class="inputField">
+                        <label class="form-label">Kategorie</label>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Kategorie </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li onclick=switchCategorie(0)><a id="categorie(0)" class="dropdown-item"
+                                        href="#">Vertrieb</a></li>
+                                <li onclick=switchCategorie(1)><a id="categorie(1)" class="dropdown-item"
+                                        href="#">Einkauf</a></li>
+                                <li onclick=switchCategorie(2)><a id="categorie(2)" class="dropdown-item"
+                                        href="#">IT</a>
+                                </li>
+                                <li onclick=switchCategorie(3)><a id="categorie(3)" class="dropdown-item"
+                                        href="#">Management</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="inputField">
+                        <label class="form-label">Beschreibung</label>
+                        <div class="form-floating">
+                            <textarea class="form-control description" placeholder="Leave a comment here"
+                                id="description" required></textarea>
+                            <label for="floatingTextarea"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="taskBoxContent">
+
+                    <div class="inputField">
+                        <label class="form-label">Fälligkeitsdatum</label>
+                        <input id="date" class="form-control" type="date" placeholder="Select DateTime" required>
+                    </div>
+
+                    <div class="inputField">
+                        <label for="inputPassword5" class="form-label">Wichtigkeit</label>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Wichtigkeit </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li onclick=switchUrgency(0)><a id="urgency(0)" class="dropdown-item"
+                                        href="#">Wichtig</a>
+                                </li>
+                                <li onclick=switchUrgency(1)><a id="urgency(1)" class="dropdown-item"
+                                        href="#">Neutral</a>
+                                </li>
+                                <li onclick=switchUrgency(2)><a id="urgency(2)" class="dropdown-item"
+                                        href="#">Unwichtig</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="inputField">
+                        <label class="form-label">Verantwortlich</label>
+                        <div class="responsibility">
+                            <div id="assignedTo"></div>
+                            <div class="btn btn-outline-light" id="addPerformer" onclick="hide('addPerformer'), show('allMembers'), generateAllMembers()">+</div>
+                            <div id="allMembers" class="list-group"></div>
+                        </div>
+
+
+                        <div class="task-buttons">
+                            <button onclick="cancel()" type="button" class="btn btn-light btn-sm btn2">Abbrechen</button>
+                            <button onclick="addTask()" type="button" class="btn btn-primary btn-sm">Aufgabe
+                                erstellen</button>
+                        </div>
+
+                    </div>
+                    
+                </div>
+
+
+
+            </form>
+
+        </div>
+        
+
+        <!-- FOOTER -->
+        <div w3-include-html="templates/footer.html"></div>
+    </div>
+</body>
+
+</html>
