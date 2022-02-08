@@ -9,11 +9,12 @@ async function initBacklog(){
  * This function render all Backlogelements that have been added.
  */
 
-function renderBacklog() {
+async function renderBacklog() {
 
-    allTasks = getFromSmallestBackend('allTasks');
+     allTasks = await getFromSmallestBackend('allTasks');
+    //allTasks = getFromLocalStorage('allTasks');
 
-    console.log(allTasks);
+    console.log('Hier alle tasks'+ allTasks);
 
     let container = document.getElementById('container');
     container.innerHTML = '';
@@ -77,10 +78,15 @@ async function showTaskElementOnTheBoard(id) {
     }
     
     await setToSmallestBackend('allTasks', allTasks);
+    //setToLocalStorage('allTasks', allTasks);
     renderBacklog();
 
     window.location.assign('board.html');
 
 }
 
+
+function getFromSmallestBackend(key) { //set here and use below
+    return JSON.parse(backend.getItem(key))||[];
+  }
 

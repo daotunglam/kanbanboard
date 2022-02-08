@@ -22,9 +22,10 @@ async function initBoard(){
 
 
 /** LOAD PAGE ========================================================== (start) */
-function loadPage(){
+async function loadPage(){
    
-    allTasks = getFromSmallestBackend('allTasks');
+    allTasks = await getFromSmallestBackend('allTasks');
+    //allTasks = getFromLocalStorage('allTasks');
     
 
     let todoTasks = allTasks.filter(task => task.column == 'todo')
@@ -153,6 +154,7 @@ function drag(id){
 async function dropIn(columnName){
     currentTask.column = columnName;
     await setToSmallestBackend('allTasks', allTasks);
+    //setToLocalStorage('allTasks', allTasks);
     loadPage();
 }
 /** DRAG-DROP ========================================================== (end) */
@@ -208,6 +210,8 @@ async function delTask(id){
     findTaskById(id);
     allTasks.splice(currentTaskIndex, 1);
     await setToSmallestBackend('allTasks', allTasks);
+
+    //setToLocalStorage('allTasks', allTasks);
     loadPage();
 }
 /** DELETE TASK ========================================================== (end) */
@@ -250,6 +254,7 @@ async function saveEditedTask(id){
     allTasks.splice(currentTaskIndex, 1, newTask);
 
     await setToSmallestBackend('allTasks', allTasks);
+    //setToLocalStorage('allTasks', allTasks);
 
     loadPage();
 }
@@ -258,6 +263,9 @@ async function saveEditedTask(id){
 
 
 
+function getFromSmallestBackend(key) { //set here and use below
+    return JSON.parse(backend.getItem(key))||[];
+  }
 
 
 

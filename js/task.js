@@ -23,11 +23,11 @@ let allMembers = [
     },
 ];
 
-
 async function initTask(){
     init();
     await downloadFromServer();
-    allTasks = getFromSmallestBackend('allTasks');
+    allTasks = await getFromSmallestBackend('allTasks');
+    //allTasks = getFromLocalStorage('allTasks');
 }
 
 
@@ -136,23 +136,17 @@ async function addTask() {
         'isNewTaskFlag': true,
         'assignedTo': assignedTo,
     }
-
-
-   
-
-  
-
     allTasks.push(task);
     
-    console.log(allTasks);
-    console.log(assignedTo.name);
+   console.log(allTasks);
+
 
 
     await setToSmallestBackend('allTasks', allTasks);
-
+    //setToLocalStorage('allTasks', allTasks);
     cancel();
 
-   //window.location.assign('backlog.html');
+   window.location.assign('backlog.html');
 
 
 }
@@ -170,4 +164,8 @@ function cancel() {
     document.getElementById("dropdownMenuButton2").innerHTML = "Wichtigkeit";
 }
 
+
+function getFromSmallestBackend(key) { //set here and use below
+    return JSON.parse(backend.getItem(key))||[];
+}
 
