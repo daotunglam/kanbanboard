@@ -33,8 +33,9 @@ function init(){
 function markActive(){
 
   const currentLocation = location.href;
+  console.log( 'Von Daniel currentlocation', currentLocation);
   let navItems = document.querySelectorAll('header nav a')
-
+  console.log('das hier ist navitems', navItems);
   for(let i=0; i < navItems.length; i++){
       if(currentLocation === navItems[i].href){
           navItems[i].classList.add('active')
@@ -107,6 +108,7 @@ function includeHTML() {
     if (file) {
       /* Make an HTTP request using the attribute value as the file name: */
       xhttp = new XMLHttpRequest();
+      console.log("statement" + xhttp);
       xhttp.onreadystatechange = function() {
         if (this.readyState == 4) {
           if (this.status == 200) {elmnt.innerHTML = this.responseText;}
