@@ -25,9 +25,9 @@ let allMembers = [
 
 async function initTask(){
     init();
-    await downloadFromServer();
-    allTasks = await getFromSmallestBackend('allTasks');
-    //allTasks = getFromLocalStorage('allTasks');
+    //await downloadFromServer();
+    //allTasks = await getFromSmallestBackend('allTasks');
+    allTasks = getFromLocalStorage('allTasks');
 }
 
 
@@ -103,6 +103,30 @@ async function addTask() {
     date = document.getElementById('date').value;
     description = document.getElementById('description').value;
 
+    checkAllInputfields
+
+    let task = {
+        'column': 'todo', //to specify this task goes to column To Do, In Progress, Test or Done
+        'title': title,
+        'date': date,
+        'categorie': categorie,
+        'urgency': urgency,
+        'description': description,
+        'id': new Date().getTime(),
+        'isNewTaskFlag': true,
+        'assignedTo': assignedTo,
+    }
+    allTasks.push(task);
+    
+   console.log(allTasks);
+    //await setToSmallestBackend('allTasks', allTasks);
+    setToLocalStorage('allTasks', allTasks);
+    cancel();
+   window.location.assign('backlog.html');
+}
+
+
+function checkAllInputfields(){
     if (title == "") {
         alert("Bitte einen Titel eingeben");
         return;
@@ -123,32 +147,6 @@ async function addTask() {
         return;
     }
     
-
-
-    let task = {
-        'column': 'todo', //to specify this task goes to column To Do, In Progress, Test or Done
-        'title': title,
-        'date': date,
-        'categorie': categorie,
-        'urgency': urgency,
-        'description': description,
-        'id': new Date().getTime(),
-        'isNewTaskFlag': true,
-        'assignedTo': assignedTo,
-    }
-    allTasks.push(task);
-    
-   console.log(allTasks);
-
-
-
-    await setToSmallestBackend('allTasks', allTasks);
-    //setToLocalStorage('allTasks', allTasks);
-    cancel();
-
-   window.location.assign('backlog.html');
-
-
 }
 
 /**

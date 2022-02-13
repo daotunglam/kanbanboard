@@ -33,9 +33,7 @@ function init(){
 function markActive(){
 
   const currentLocation = location.href;
-  console.log( 'Von Daniel currentlocation', currentLocation);
   let navItems = document.querySelectorAll('header nav a')
-  console.log('das hier ist navitems', navItems);
   for(let i=0; i < navItems.length; i++){
       if(currentLocation === navItems[i].href){
           navItems[i].classList.add('active')
@@ -108,7 +106,6 @@ function includeHTML() {
     if (file) {
       /* Make an HTTP request using the attribute value as the file name: */
       xhttp = new XMLHttpRequest();
-      console.log("statement" + xhttp);
       xhttp.onreadystatechange = function() {
         if (this.readyState == 4) {
           if (this.status == 200) {elmnt.innerHTML = this.responseText;}
@@ -168,11 +165,20 @@ async function getFromSmallestBackend(key) { //set here and use below
   //return JSON.parse(localStorage.getItem(key));
 //}
 
-async function deleteAll(){
+function deleteAll(){
  allTasks = []; 
- await setToSmallestBackend('allTasks', allTasks);
- //setToLocalStorage('allTasks', allTasks);
+ //await setToSmallestBackend('allTasks', allTasks);
+ setToLocalStorage('allTasks', allTasks);
  console.log(allTasks);
  console.log("ich bin fertig");
 }
+}
+
+function getFromLocalStorage(key){
+  console.log("ich werde ausgeführt");
+  return JSON.parse(localStorage.getItem(key))||[];
+}
+
+function setToLocalStorage(key, array) { //set here and use below
+  localStorage.setItem(key, JSON.stringify(array));
 }

@@ -1,19 +1,21 @@
 
 /**
- * When Board loads, first of all, an array names allTasks will be created with data from localstorage.
- * If the localstorage is empty, no array will be created, and the columns of tasks on Board will be empty.
- * Ater that, if Add Task is performed, Board will have a toto.
+ * When Board loads, first of all, an array names allTasks will be created with data from the smallest backend.
+ * If the data structure from the server is empty, no array will be created, and the columns of tasks on Board will be empty.
+ * Ater that, if Add Task is performed, Board will have a todo.
  */
 
 
 let currentTask, currentTaskIndex;
 
 
+/**
+ * initfunction to prepare everything that the page can be used
+ */
 async function initBoard(){
-    init();
-    
-    await downloadFromServer();
-    loadPage();
+    init();  
+    //await downloadFromServer();
+    filterDataStructure();
 }
 
 
@@ -21,13 +23,14 @@ async function initBoard(){
 
 
 
-/** LOAD PAGE ========================================================== (start) */
-async function loadPage(){
-   
-    allTasks = await getFromSmallestBackend('allTasks');
-    //allTasks = getFromLocalStorage('allTasks');
+/**  
+ * function to load the main datastructure and filter the main datastructure 
+ * 
+*/
+async function filterDataStructure(){
+   //allTasks = await getFromSmallestBackend('allTasks');
+    allTasks = getFromLocalStorage('allTasks');
     
-
     let todoTasks = allTasks.filter(task => task.column == 'todo')
     let inProgressTasks = allTasks.filter(task => task.column == 'inProgress')
     let testingTasks = allTasks.filter(task => task.column == 'testing')
@@ -38,37 +41,37 @@ async function loadPage(){
     document.getElementById('testing').innerHTML = ``;
     document.getElementById('done').innerHTML = ``;
 
-    todoTasks.forEach(task =>{
-        if(!task.isNewTaskFlag){
-            document.getElementById('todo').innerHTML += generateTasks(task, task.id);
-            generatePerformers(task, task.id);
-        }
-        
-    });
-    inProgressTasks.forEach(task =>{
-        if(!task.isNewTaskFlag){
-            document.getElementById('inProgress').innerHTML += generateTasks(task, task.id);
-            generatePerformers(task, task.id);
-        }
-        
-    });
-    testingTasks.forEach(task =>{
-        if(!task.isNewTaskFlag){
-            document.getElementById('testing').innerHTML += generateTasks(task, task.id);
-            generatePerformers(task, task.id);
-        }
-        
-    });
-    doneTasks.forEach(task =>{
-        if(!task.isNewTaskFlag){
-            document.getElementById('done').innerHTML += generateTasks(task, task.id);
-            generatePerformers(task, task.id);
-        }
-        
-    });
-  
+    renderFilterTasks(todoTasks, 'todo');
+    renderFilterTasks(inProgressTasks, 'inProgress');
+    renderFilterTasks(testingTasks, 'testing');
+    renderFilterTasks(doneTasks, 'done');
+      
 }
 
+
+/**
+ * this function renders every array based on the given category
+ * @param {*} zuFilterndesArray the overgiven array 
+ * @param {*} filterKategorie the overgiven category
+ */
+function renderFilterTasks(zuFilterndesArray, filterKategorie){
+   
+    zuFilterndesArray.forEach(task =>{
+        if(!task.isNewTaskFlag){
+            document.getElementById(filterKategorie).innerHTML += generateTasks(task, task.id);
+            generatePerformers(task, task.id);
+        }
+        
+    });
+
+}
+
+/**
+ * generates every task by id
+ * @param {} task 
+ * @param {*} id 
+ * @returns 
+ */
 function generateTasks(task, id) {
     
     
@@ -95,8 +98,13 @@ function generateTasks(task, id) {
     
 }
 
+/**
+ * function generates the performers
+ * @param {} task 
+ * @param {*} id 
+ */
 function generatePerformers(task, id){
-    console.log(task.assignedTo)
+ 
     document.getElementById(`assignedTo${id}`).innerHTML = '';
     task.assignedTo.forEach(performer =>{
         
@@ -153,9 +161,9 @@ function drag(id){
 
 async function dropIn(columnName){
     currentTask.column = columnName;
-    await setToSmallestBackend('allTasks', allTasks);
-    //setToLocalStorage('allTasks', allTasks);
-    loadPage();
+    //await setToSmallestBackend('allTasks', allTasks);
+    setToLocalStorage('allTasks', allTasks);
+    filterDataStructure();
 }
 /** DRAG-DROP ========================================================== (end) */
 
@@ -209,10 +217,9 @@ function editTask(id){
 async function delTask(id){
     findTaskById(id);
     allTasks.splice(currentTaskIndex, 1);
-    await setToSmallestBackend('allTasks', allTasks);
-
-    //setToLocalStorage('allTasks', allTasks);
-    loadPage();
+    //await setToSmallestBackend('allTasks', allTasks);
+    setToLocalStorage('allTasks', allTasks);
+    filterDataStructure();
 }
 /** DELETE TASK ========================================================== (end) */
 
@@ -225,44 +232,66 @@ async function delTask(id){
 async function saveEditedTask(id){
     findTaskById(id);
     
+    let assignedTo = currentTask['assignedTo'];
+    /*
     let editedColumn = currentTask.column;
     let editedCategorie = document.getElementById(`categorie${id}`);
     let editedTitle = document.getElementById(`title${id}`);
     let editedDescription = document.getElementById(`description${id}`);
     let editedDate = document.getElementById(`date${id}`);
     let editedUrgency = document.getElementById(`urgency${id}`);
+    */
+
     
-    if (editedTitle.value == "") {
-        alert("Bitte ein Titel hinzugügen");
-        return;
-    } else if (editedDescription.value ==""){
-        alert("Bitte ein Beschreibung hinzufügen");
-        return;
-    }
+    let checkedTitle = checkTheGivenInputfield(document.getElementById(`title${id}`).value);
+    let checkedDescription = checkTheGivenInputfield(document.getElementById(`description${id}`).value);
     
-    let newTask = {
-        'column': editedColumn,
-        'title': editedTitle.value,
-        'date': editedDate.value,
-        'categorie': editedCategorie.value,
-        'urgency': editedUrgency.value,
-        'description': editedDescription.value, //without replaceAll() all breaklines from textarea will be showed as spaces on the browser.
-        'id': id,
-        'isNewTaskFlag': true//this boolean states if the task has already been opened and transfered to the board; True: the task is new (task is one the backlog); False: the taks is already on the board
+    if(checkedTitle && checkedDescription){
+
+        let newTask = {
+            assignedTo,
+            'column': currentTask.column,
+            'title': document.getElementById(`title${id}`).value,
+            'date': document.getElementById(`date${id}`).value,
+            'categorie': document.getElementById(`categorie${id}`).value,
+            'urgency': document.getElementById(`urgency${id}`).value,
+            'description': document.getElementById(`description${id}`).value, //without replaceAll() all breaklines from textarea will be showed as spaces on the browser.
+            'id': id,
+            'isNewTaskFlag': false//this boolean states if the task has already been opened and transfered to the board; True: the task is new (task is one the backlog); False: the taks is already on the board
+        }
+    
+        allTasks.splice(currentTaskIndex, 1, newTask);
+        //await setToSmallestBackend('allTasks', allTasks);
+       
+
     }
-
-    allTasks.splice(currentTaskIndex, 1, newTask);
-
-    await setToSmallestBackend('allTasks', allTasks);
-    //setToLocalStorage('allTasks', allTasks);
-
-    loadPage();
+    setToLocalStorage('allTasks', allTasks);
+    filterDataStructure();
 }
 
 /** SAVE EDITED TASK ========================================================== (end) */
 
 
 
+/**
+ * this function checks if given variable (inputfield) is empty or not 
+ * @param {} editedCategorie 
+ * @returns 
+ */
+function checkTheGivenInputfield(editedCategorie){
+    if (editedCategorie == "") {
+        alert("Bitte ein Titel hinzugügen");
+        return false;
+    } 
+
+    return true;
+}
+
+/**
+ * function is used to get the data from the backend
+ * @param {} key 
+ * @returns 
+ */
 function getFromSmallestBackend(key) { //set here and use below
     return JSON.parse(backend.getItem(key))||[];
   }
