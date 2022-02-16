@@ -1,6 +1,6 @@
 async function initBacklog(){
     init();
-    //await downloadFromServer();
+    await downloadFromServer();
     renderBacklog();
 }
 
@@ -11,8 +11,8 @@ async function initBacklog(){
 
 async function renderBacklog() {
 
-    //allTasks = await getFromSmallestBackend('allTasks');
-    allTasks = getFromLocalStorage('allTasks');
+    allTasks = await getFromSmallestBackend('allTasks');
+    //allTasks = getFromLocalStorage('allTasks');
     let container = document.getElementById('container');
     container.innerHTML = '';
 
@@ -74,8 +74,8 @@ async function showTaskElementOnTheBoard(id) {
 
     }
     
-    //await setToSmallestBackend('allTasks', allTasks);
-    setToLocalStorage('allTasks', allTasks);
+    await setToSmallestBackend('allTasks', allTasks);
+    //setToLocalStorage('allTasks', allTasks);
     renderBacklog();
 
     window.location.assign('board.html');
@@ -90,6 +90,15 @@ async function showTaskElementOnTheBoard(id) {
 function getFromSmallestBackend(key) { //set here and use below
     return JSON.parse(backend.getItem(key))||[];
 }
+
+async function deleteAll(){
+    allTasks = []; 
+    await setToSmallestBackend('allTasks', allTasks);
+    //setToLocalStorage('allTasks', allTasks);
+    console.log(allTasks);
+    console.log("ich bin fertig");
+}
+   
 
 
 

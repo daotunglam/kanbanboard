@@ -14,7 +14,7 @@ let currentTask, currentTaskIndex;
  */
 async function initBoard(){
     init();  
-    //await downloadFromServer();
+    await downloadFromServer();
     filterDataStructure();
 }
 
@@ -28,8 +28,8 @@ async function initBoard(){
  * 
 */
 async function filterDataStructure(){
-   //allTasks = await getFromSmallestBackend('allTasks');
-    allTasks = getFromLocalStorage('allTasks');
+    allTasks = await getFromSmallestBackend('allTasks');
+    //allTasks = getFromLocalStorage('allTasks');
     
     let todoTasks = allTasks.filter(task => task.column == 'todo')
     let inProgressTasks = allTasks.filter(task => task.column == 'inProgress')
@@ -161,8 +161,8 @@ function drag(id){
 
 async function dropIn(columnName){
     currentTask.column = columnName;
-    //await setToSmallestBackend('allTasks', allTasks);
-    setToLocalStorage('allTasks', allTasks);
+    await setToSmallestBackend('allTasks', allTasks);
+    //setToLocalStorage('allTasks', allTasks);
     filterDataStructure();
 }
 /** DRAG-DROP ========================================================== (end) */
@@ -217,8 +217,8 @@ function editTask(id){
 async function delTask(id){
     findTaskById(id);
     allTasks.splice(currentTaskIndex, 1);
-    //await setToSmallestBackend('allTasks', allTasks);
-    setToLocalStorage('allTasks', allTasks);
+    await setToSmallestBackend('allTasks', allTasks);
+    //setToLocalStorage('allTasks', allTasks);
     filterDataStructure();
 }
 /** DELETE TASK ========================================================== (end) */
@@ -261,11 +261,12 @@ async function saveEditedTask(id){
         }
     
         allTasks.splice(currentTaskIndex, 1, newTask);
-        //await setToSmallestBackend('allTasks', allTasks);
+        await setToSmallestBackend('allTasks', allTasks);
        
 
     }
-    setToLocalStorage('allTasks', allTasks);
+    await setToSmallestBackend('allTasks', allTasks);
+    //setToLocalStorage('allTasks', allTasks);
     filterDataStructure();
 }
 

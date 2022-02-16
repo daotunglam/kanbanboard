@@ -25,9 +25,9 @@ let allMembers = [
 
 async function initTask(){
     init();
-    //await downloadFromServer();
-    //allTasks = await getFromSmallestBackend('allTasks');
-    allTasks = getFromLocalStorage('allTasks');
+    await downloadFromServer();
+    allTasks = await getFromSmallestBackend('allTasks');
+    //allTasks = getFromLocalStorage('allTasks');
 }
 
 
@@ -103,7 +103,7 @@ async function addTask() {
     date = document.getElementById('date').value;
     description = document.getElementById('description').value;
 
-    checkAllInputfields
+    checkAllInputfields();
 
     let task = {
         'column': 'todo', //to specify this task goes to column To Do, In Progress, Test or Done
@@ -119,8 +119,8 @@ async function addTask() {
     allTasks.push(task);
     
    console.log(allTasks);
-    //await setToSmallestBackend('allTasks', allTasks);
-    setToLocalStorage('allTasks', allTasks);
+    await setToSmallestBackend('allTasks', allTasks);
+    //setToLocalStorage('allTasks', allTasks);
     cancel();
    window.location.assign('backlog.html');
 }

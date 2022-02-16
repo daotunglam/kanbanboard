@@ -1,4 +1,4 @@
-setURL('http://daniel-helfenstein.developerakademie.com/smallest_backend_ever');
+setURL('https://danielhelfenstein.com/smallest_backend_ever');
 
 
 let allTasks = [];
@@ -165,20 +165,12 @@ async function getFromSmallestBackend(key) { //set here and use below
   //return JSON.parse(localStorage.getItem(key));
 //}
 
-function deleteAll(){
+async function deleteAll(){
  allTasks = []; 
- //await setToSmallestBackend('allTasks', allTasks);
- setToLocalStorage('allTasks', allTasks);
+ await setToSmallestBackend('allTasks', allTasks);
+ //setToLocalStorage('allTasks', allTasks);
  console.log(allTasks);
  console.log("ich bin fertig");
 }
 }
 
-function getFromLocalStorage(key){
-  console.log("ich werde ausgeführt");
-  return JSON.parse(localStorage.getItem(key))||[];
-}
-
-function setToLocalStorage(key, array) { //set here and use below
-  localStorage.setItem(key, JSON.stringify(array));
-}
